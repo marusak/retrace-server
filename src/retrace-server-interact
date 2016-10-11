@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
     if task.get_type() == TASK_RETRACE_INTERACTIVE:
         if args.action == "shell":
-            cmdline = ["/usr/bin/mock", "--configdir", task.get_savedir(), "shell"]
+            cmdline = ["/usr/bin/mock", "--configdir", task.get_savedir(), "--new-chroot", "shell"]
             print_cmdline(cmdline)
             os.execvp(cmdline[0], cmdline)
         if args.action == "gdb":
@@ -95,7 +95,7 @@ if __name__ == "__main__":
                 sys.stderr.write("executable contains forbidden characters.\n")
                 exit(1)
 
-            cmdline = ["/usr/bin/mock", "--configdir", task.get_savedir(), "shell",
+            cmdline = ["/usr/bin/mock", "--configdir", task.get_savedir(), "--new-chroot", "shell",
                        "gdb '%s' /var/spool/abrt/crash/coredump" % executable]
 
             print_cmdline(cmdline)
@@ -133,10 +133,10 @@ if __name__ == "__main__":
                 else:
                     vmlinux = task.prepare_debuginfo(vmcore, chroot=cfgdir, kernelver=kernelver, crash_cmd=task.get_crash_cmd().split())
                 if task.has_crashrc():
-                    cmdline = ["/usr/bin/mock", "--configdir", cfgdir,
+                    cmdline = ["/usr/bin/mock", "--configdir", cfgdir, "--new-chroot",
                                "shell", "crash -i %s %s %s" % (task.get_crashrc_path(), vmcore, vmlinux)]
                 else:
-                    cmdline = ["/usr/bin/mock", "--configdir", cfgdir,
+                    cmdline = ["/usr/bin/mock", "--configdir", cfgdir, "--new-chroot",
                                "shell", "crash %s %s" % (vmcore, vmlinux)]
 
             print_cmdline(cmdline)
@@ -145,7 +145,8 @@ if __name__ == "__main__":
         if args.action == "shell":
             if task.use_mock(kernelver):
                 cmdline = ["/usr/bin/mock", "--configdir",
-                           os.path.join(CONFIG["SaveDir"], "%d-kernel" % task.get_taskid()), "shell"]
+                           os.path.join(CONFIG["SaveDir"], "%d-kernel" % task.get_taskid()),
+                           "--new-chroot", "shell"]
 
                 print_cmdline(cmdline)
                 os.execvp(cmdline[0], cmdline)
