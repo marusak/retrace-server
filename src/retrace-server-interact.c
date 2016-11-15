@@ -56,8 +56,8 @@ int main (int argc, char *argv[])
 
     //Set gid to mock and execute retrace-server-interact
     setgid(getgrnam("mock")->gr_gid);
-    const char *mock = "/usr/libexec/retrace-server-interact";
+    const char *mock = "/usr/libexec/retrace-server-interact-real";
     argv[0] = (char*)mock;
-    execv("/usr/libexec/retrace-server-interact", argv);
+    execv("/usr/libexec/retrace-server-interact-real", argv);
     return 0;
 }

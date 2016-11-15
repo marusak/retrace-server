@@ -9,7 +9,6 @@ Group: Applications/System
 URL: https://fedorahosted.org/abrt/wiki/AbrtRetraceServer
 Source: https://fedorahosted.org/released/%{name}/%{name}-%{version}.tar.gz
 
-BuildArch: noarch
 
 BuildRequires: intltool
 BuildRequires: libtool
@@ -120,7 +119,8 @@ fi
 %dir %attr(0770,retrace,retrace) %{_localstatedir}/spool/%{name}
 %dir %{_datadir}/%{name}
 %{_bindir}/%{name}-worker
-%{_bindir}/%{name}-interact
+%attr(4755,root,root) %{_bindir}/%{name}-interact
+%{_libexecdir}/%{name}-interact-real
 %{_bindir}/%{name}-cleanup
 %{_bindir}/%{name}-reposync
 %{_bindir}/%{name}-reposync-faf

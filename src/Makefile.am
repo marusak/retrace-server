@@ -23,8 +23,11 @@ dist_bin_SCRIPTS = bt_filter \
                    retrace-server-reposync \
                    retrace-server-reposync-faf \
                    retrace-server-worker \
-                   retrace-server-interact\
                    retrace-server-plugin-checker
+
+dist_libexec_SCRIPTS = retrace-server-interact-real
+
+bin_PROGRAMS = retrace-server-interact
 
 interface_PYTHON = backtrace.wsgi \
                    create.wsgi \
@@ -46,6 +49,10 @@ interface_DATA = index.xhtml \
                  manager_usrcore_task_form.xhtml \
                  managertask.xhtml \
                  stats.xhtml
+
+retrace_server_interact_SOURCES = retrace-server-interact.c
+retrace_server_interact_CFLAGS = -std=c99
+
 # interfacedir should probably be $$(pkgdatadir)/retrace
 interfacedir =  $(datadir)/retrace-server
 
